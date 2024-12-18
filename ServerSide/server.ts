@@ -5,7 +5,7 @@ import Limit from "./config/limiter";
 import { dbConfig } from "./config/dbConfig";
 import Userrouter from "./routes/useroutes";
 import morgan from 'morgan';
-import Menurouter from "./routes/Menuroutes";
+import itemrouter from "./routes/itemroutes";
 dotenv.config();
 
 const app = express();
@@ -18,8 +18,8 @@ app.use(morgan('dev'));
 app.use(Limit);
 
 dbConfig();
-app.use(Userrouter)
-app.use(Menurouter)
+app.use(Userrouter);
+app.use(itemrouter);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     });
