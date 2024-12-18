@@ -37,6 +37,11 @@ export const createStaticItem = expressAsyncHandler(async(req: Request, res: Res
             price,
             deliveryTime
         });
+        res.status(201).json({
+            status:'success',
+            message:'Item created successfully',
+            data:newStaticItem
+        });
     }    catch(error: any){
         res.status(500).json({status:'error', message:error.message});
     }
