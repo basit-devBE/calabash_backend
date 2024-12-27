@@ -47,7 +47,7 @@ export const createCustomizableItem = expressAsyncHandler(async (req: Request, r
             description,
             image: secure_url,
             range,
-            price,
+            
             deliveryTime,
             toppings: toppingsArray,
         });
