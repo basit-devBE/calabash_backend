@@ -23,16 +23,16 @@ app.use(morgan("dev"));
 app.use(Limit);
 
 
-const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:3000", 
-  credentials: true,
-};
-app.use(cors(corsOptions));
-
 // const corsOptions = {
-//   origin: "http://localhost:3000", 
-//   credentials: true, 
+//   origin: process.env.FRONTEND_URL || "http://localhost:3000", 
+//   credentials: true,
 // };
+// app.use(cors(corsOptions));
+
+const corsOptions = {
+  origin: "http://localhost:3000", 
+  credentials: true, 
+};
 app.use(cors(corsOptions));
 
 

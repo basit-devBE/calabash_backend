@@ -34,7 +34,13 @@ const customizableItemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  toppings: [toppingsSchema],
+  //   toppings: [toppingsSchema],
+  toppings: [
+    {
+      topping: { type: String, required: true },
+      price: { type: Number, required: true },
+    },
+  ],
 });
 
 export const CustomizableItem = mongoose.model(
