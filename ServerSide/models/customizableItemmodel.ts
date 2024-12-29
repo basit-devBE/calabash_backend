@@ -1,43 +1,31 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const toppingsSchema = new mongoose.Schema({
-    topping:{
-        type:String,
-        required:true
+const customizableItemSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true   
     },
-    price:{
-        type:Number,
-        required:true
+    description: {
+        type: String,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    },
+    price_range: {
+        type: {
+            min: { type: Number, required: true },
+            max: { type: Number, required: true }
+        },
+        required: true
+    },
+    deliveryTime: {
+        type: String,
+        required: true
     }
 });
 
-const customizableItemSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required:true,
-        unique:true   
-    },
-    description:{
-        type:String,
-        required:true
-    },
-    image:{
-        type:String,
-        required:true
-    },
-    range:{
-        type:String,
-        required:true
-    },
-    price:{
-        type:Number,
-        required:true
-    },
-    deliveryTime:{
-        type:String,
-        required:true
-    },
-    toppings:[toppingsSchema]
-});
-
-export const CustomizableItem = mongoose.model('CustomizableItem', customizableItemSchema);
+const CustomizableItem = mongoose.model('CustomizableItem', customizableItemSchema);
+export default CustomizableItem;

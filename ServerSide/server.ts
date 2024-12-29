@@ -6,6 +6,7 @@ import { dbConfig } from "./config/dbConfig";
 import Userrouter from "./routes/useroutes";
 import morgan from 'morgan';
 import itemrouter from "./routes/itemroutes";
+import cartRouter from "./routes/cartRoutes";
 dotenv.config();
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(Limit);
 dbConfig();
 app.use(Userrouter);
 app.use(itemrouter);
+app.use(cartRouter);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     });

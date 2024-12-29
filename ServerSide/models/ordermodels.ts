@@ -1,6 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 
-const ordermodel = new mongoose.Schema({
-    
-});
+const orderModel = new mongoose.Schema({
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref:'User'
+    },
+    items:[
+        {
+            
+        }
+    ]
+})

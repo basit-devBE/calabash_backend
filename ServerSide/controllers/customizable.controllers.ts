@@ -2,7 +2,7 @@ import expressAsyncHandler from "express-async-handler";
 import { Request, Response } from "express";
 import User from "../models/usermodels";
 import { uploadImage } from "../utils/cloudinary";
-import { CustomizableItem } from '../models/customizableItemmodel';
+import  CustomizableItem  from '../models/customizableItemmodel';
 
 export const createCustomizableItem = expressAsyncHandler(async (req: Request, res: Response) => {
     const user = await User.findById(req.userId);
@@ -15,7 +15,7 @@ export const createCustomizableItem = expressAsyncHandler(async (req: Request, r
         return;
     }
 
-    const { name, description, range, price, deliveryTime, toppings } = req.body;
+    const { name, description, price_range, deliveryTime } = req.body;
     const image = req.file as Express.Multer.File;
 
     if (!image) {
@@ -23,34 +23,27 @@ export const createCustomizableItem = expressAsyncHandler(async (req: Request, r
         return;
     }
 
+    if (!price_range || !price_range.min || !price_range.max) {
+        res.status(400).json({ status: 'error', message: 'Price range (min and max) is required' });
+        return;
+    }
+
+    // Upload image to Cloudinary
+    const secure_url = await uploadImage(image.path);
+
     try {
-        // Parse and validate toppings
-        let toppingsArray = [];
-        if (toppings) {
-            try {
-                toppingsArray = JSON.parse(toppings).map((topping: any) => ({
-                    topping: topping.topping,
-                    price: topping.price,
-                }));
-            } catch (err) {
-                res.status(400).json({ status: 'error', message: 'Invalid toppings format' });
-                return;
-            }
-        }
-
-        // Upload image to cloudinary
-        const secure_url = await uploadImage(image.path);
-
         // Create the customizable item
         const newitem = await CustomizableItem.create({
             name,
             description,
             image: secure_url,
-            range,
-            price,
+            price_range: {
+                min: price_range.min,
+                max: price_range.max
+            },
             deliveryTime,
-            toppings: toppingsArray,
         });
+
         res.status(201).json({
             status: 'success',
             message: 'Customizable item created successfully',
